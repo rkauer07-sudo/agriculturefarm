@@ -622,6 +622,21 @@ footer {
 }
 .foot-agr { color: #1A4FC4; font-size: 0.68rem; letter-spacing: 3px; font-style: italic; font-weight: 900; -webkit-text-stroke: 2.5px #ffffff; paint-order: stroke fill; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 .foot-farm { color: #BF0A30; font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 14px; font-style: italic; font-weight: 900; -webkit-text-stroke: 3px #ffffff; paint-order: stroke fill; text-shadow: 0 2px 10px rgba(0,0,0,0.6); }
+/* ── FAQ ── */
+.faq-list { max-width: 760px; margin: 48px auto 0; display: flex; flex-direction: column; gap: 12px; }
+.faq-item { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; overflow: hidden; transition: border-color 0.2s; }
+.faq-item:hover { border-color: rgba(26,79,196,0.4); }
+.faq-item.open { border-color: rgba(26,79,196,0.6); }
+.faq-q { width: 100%; background: none; border: none; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; color: var(--text); font-family: 'Exo 2', sans-serif; font-size: 1rem; font-weight: 600; text-align: left; }
+.faq-q:hover { color: #fff; }
+.faq-q span { flex: 1; }
+.faq-arrow { width: 18px; height: 18px; flex-shrink: 0; color: var(--blue); transition: transform 0.3s ease; }
+.faq-item.open .faq-arrow { transform: rotate(180deg); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease, padding 0.3s ease; padding: 0 24px; color: var(--muted); font-size: 0.92rem; line-height: 1.7; }
+.faq-a strong { color: var(--text); }
+.faq-item.open .faq-a { max-height: 200px; padding: 0 24px 20px; }
+.faq-item.open .faq-q { color: #fff; }
+
 .foot-links { display: flex; gap: 20px; justify-content: center; margin-bottom: 14px; flex-wrap: wrap; }
 .foot-links a { color: var(--muted); font-size: 0.75rem; text-decoration: none; transition: color 0.2s; letter-spacing: 1px; cursor: pointer; }
 .foot-links a:hover { color: var(--text); }
@@ -910,6 +925,62 @@ footer {
 
 <div class="divider"></div>
 
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="reveal">
+    <div class="eyebrow">FAQ</div>
+    <div class="glow-line"></div>
+    <h2 class="sec-title">Frequently Asked Questions</h2>
+    <p class="sec-lead">Everything you need to know before connecting your wallet.</p>
+  </div>
+  <div class="faq-list reveal">
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>What is Agriculture Farm?</span>
+        <svg class="faq-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-a">Agriculture Farm is an idle game built on Solana where you earn real $TRUMP tokens. Buy plots, unlock upgrades, and watch your farm generate tokens every second — all backed by real on-chain transactions.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>Do I need a wallet to play?</span>
+        <svg class="faq-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-a">Yes. You need the <strong>Phantom Wallet</strong> browser extension to connect and play. All in-game purchases use real USDC on Solana devnet (testnet coins, no real money required to try the game).</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>Is $TRUMP a real token?</span>
+        <svg class="faq-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-a">$TRUMP is an SPL token created and managed by the Agriculture Farm treasury on Solana. Every token you earn in-game is minted on-chain and can be withdrawn to your Phantom wallet once mainnet launches.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>When is mainnet launch?</span>
+        <svg class="faq-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-a">We are currently on Solana devnet while testing game mechanics and token distribution. Mainnet launch will be announced on our official X account. Token withdrawals will be enabled at that point.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>How is revenue distributed?</span>
+        <svg class="faq-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-a">Every USDC payment in the game is split automatically on-chain: <strong>60%</strong> goes to the Treasury for long-term development, <strong>30%</strong> to Operations & Growth, and <strong>10%</strong> to Marketing.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-q" onclick="toggleFaq(this)">
+        <span>Is my progress saved?</span>
+        <svg class="faq-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="faq-a">Yes. Your farm progress is automatically saved to the cloud and linked to your wallet address. You can switch devices or browsers at any time and your farm will be exactly where you left it.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
 <!-- CTA BOTTOM -->
 <div class="cta-sec">
   <div class="reveal">
@@ -936,6 +1007,7 @@ footer {
     <a href="#how">How It Works</a>
     <a href="#tokenomics">Tokenomics</a>
     <a href="#features">Features</a>
+    <a href="#faq">FAQ</a>
     <a href="https://play.agriculturefarm.xyz">Play Game</a>
   </div>
   <p class="foot-copy">&copy; 2025 Agriculture Farm &middot; Built on Solana &middot; <a href="https://play.agriculturefarm.xyz">play.agriculturefarm.xyz</a></p>
@@ -1039,6 +1111,14 @@ const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
   navbar.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
+
+// ── FAQ ACCORDION
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
 
 // ── STICKY CTA
 const stickyCta = document.getElementById('stickyCta');
