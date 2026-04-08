@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National Agriculture Farm — Whitepaper</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Orbitron:wght@400;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --bg:    #0b1228;
+  --bg2:   #0f1835;
+  --bg3:   #131f40;
+  --gold:  #FFD700;
+  --gold2: #FFC107;
+  --red:   #BF0A30;
+  --red2:  #E8173E;
+  --blue:  #1A4FC4;
+  --blue2: #3B72F0;
+  --text:  #dde4ff;
+  --muted: #6070a0;
+  --mut2:  #8896c0;
+  --bdr:   rgba(255,255,255,0.09);
+  --card:  rgba(255,255,255,0.04);
+  --glow-r: rgba(191,10,48,0.35);
+  --glow-b: rgba(26,79,196,0.35);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Exo 2', system-ui, sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ── BACKGROUND MESH ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    linear-gradient(rgba(59,114,240,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59,114,240,0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  animation: meshShift 20s linear infinite;
+}
+@keyframes meshShift {
+  0% { background-position: 0 0; }
+  100% { background-position: 48px 48px; }
+}
+
+/* ── NAVBAR ── */
+.navbar {
+  position: fixed; top: 14px; left: 50%;
+  transform: translateX(-50%);
+  width: min(calc(100% - 28px), 1100px);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 16px;
+  background: rgba(11,18,40,0.88);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--bdr); border-radius: 14px;
+  z-index: 100; transition: box-shadow 0.3s, background 0.3s;
+}
+.navbar.scrolled {
+  background: rgba(11,18,40,0.97);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(59,114,240,0.1);
+}
+
+/* NAV LOGO — same format as canvas: AGRICULTURE blue + FARM red */
+.nav-logo {
+  font-family: 'Bangers', cursive;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  line-height: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.nav-agr {
+  color: #1A4FC4;
+  font-size: 0.68rem;
+  letter-spacing: 3px;
+  line-height: 1.1;
+  font-style: italic;
+  font-weight: 900;
+  -webkit-text-stroke: 2.5px #ffffff;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+.nav-farm {
+  color: #BF0A30;
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  line-height: 1;
+  font-style: italic;
+  font-weight: 900;
+  -webkit-text-stroke: 3px #ffffff;
+  paint-order: stroke fill;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+}
+
+.nav-links { display: flex; gap: 22px; list-style: none; }
+.nav-links a {
+  color: var(--mut2); text-decoration: none;
+  font-size: 0.82rem; font-weight: 500; letter-spacing: 0.5px;
+  transition: color 0.2s; cursor: pointer; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; right: 0;
+  height: 1px; background: var(--gold); transform: scaleX(0);
+  transition: transform 0.2s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { transform: scaleX(1); }
+
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg, var(--red) 0%, #8B0020 100%);
+  color: #fff; padding: 8px 18px; border-radius: 8px;
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 1.5px;
+  text-decoration: none; border: 1px solid rgba(255,255,255,0.12);
+  transition: all 0.2s; cursor: pointer; text-transform: uppercase;
+  box-shadow: 0 0 0 0 rgba(191,10,48,0.5);
+  animation: navPulse 3s ease-in-out infinite;
+}
+@keyframes navPulse {
+  0%,100% { box-shadow: 0 0 0 0 rgba(191,10,48,0); }
+  50% { box-shadow: 0 0 0 6px rgba(191,10,48,0); }
+}
+.nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(191,10,48,0.6); animation: none; }
+.nav-cta svg { width: 12px; height: 12px; }
+@media (max-width: 620px) { .nav-links { display: none; } }
+
+/* ── MAIN CONTENT ── */
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px 20px 60px;
+  position: relative;
+  z-index: 10;
+}
+
+.whitepaper-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.whitepaper-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 20px;
+  text-shadow: 0 0 30px rgba(255,215,0,0.3);
+}
+
+.whitepaper-subtitle {
+  font-size: 1.2rem;
+  color: var(--mut2);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section {
+  background: var(--card);
+  border: 1px solid var(--bdr);
+  border-radius: 16px;
+  padding: 40px;
+  margin-bottom: 40px;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(59,114,240,0.1);
+}
+
+.section-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-title::before {
+  content: '🌽';
+  font-size: 1.5rem;
+}
+
+.section-content {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text);
+}
+
+.section-content p {
+  margin-bottom: 20px;
+}
+
+.section-content ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.section-content li {
+  margin-bottom: 10px;
+}
+
+.highlight {
+  background: linear-gradient(135deg, rgba(255,215,0,0.1), rgba(255,215,0,0.05));
+  border-left: 4px solid var(--gold);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.highlight strong {
+  color: var(--gold);
+}
+
+.token-price-note {
+  background: linear-gradient(135deg, rgba(191,10,48,0.1), rgba(191,10,48,0.05));
+  border-left: 4px solid var(--red);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.token-price-note strong {
+  color: var(--red);
+}
+
+.referral-system {
+  background: linear-gradient(135deg, rgba(26,79,196,0.1), rgba(26,79,196,0.05));
+  border-left: 4px solid var(--blue);
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.referral-system strong {
+  color: var(--blue);
+}
+
+.ad-system {
+  background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(34,197,94,0.05));
+  border-left: 4px solid #22c55e;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.ad-system strong {
+  color: #22c55e;
+}
+
+.back-to-home {
+  text-align: center;
+  margin-top: 60px;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 12px 24px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  background: var(--gold);
+  color: var(--bg);
+  transform: translateY(-1px);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .whitepaper-title { font-size: 2.5rem; }
+  .section { padding: 30px 20px; }
+  .section-title { font-size: 1.5rem; }
+  .main { padding: 100px 15px 40px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar">
+  <div class="nav-logo">
+    <div class="nav-agr">AGRICULTURE</div>
+    <div class="nav-farm">FARM</div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="trump-farm.html">Play Game</a></li>
+    <li><a href="ranking.html">Ranking</a></li>
+    <li><a href="whitepaper.html">Whitepaper</a></li>
+  </ul>
+  <a href="trump-farm.html" class="nav-cta">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2L13.09 8.26L19 9L13.09 9.74L12 16L10.91 9.74L5 9L10.91 8.26L12 2Z"/>
+    </svg>
+    Play Now
+  </a>
+</nav>
+
+<!-- Main Content -->
+<main class="main">
+  <header class="whitepaper-header">
+    <h1 class="whitepaper-title">WHITEPAPER</h1>
+    <p class="whitepaper-subtitle">
+      The comprehensive guide to National Agriculture Farm — A Web3 idle farming game built on Solana
+    </p>
+  </header>
+
+  <section class="section">
+    <h2 class="section-title">Project Overview</h2>
+    <div class="section-content">
+      <p>
+        National Agriculture Farm is an innovative Web3 idle farming game built on the Solana blockchain.
+        Players cultivate virtual farms, earn $TRUMP tokens, and participate in a sustainable economic ecosystem
+        designed for long-term growth and community engagement.
+      </p>
+      <p>
+        Our mission is to create the most beautiful and productive farming experience in Web3, combining
+        strategic gameplay with real economic incentives. Every decision matters, from choosing crops to
+        expanding your farm — all while contributing to a thriving token economy.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Token Economics</h2>
+    <div class="section-content">
+      <p>
+        The $TRUMP token serves as the backbone of our economic system, powering all in-game transactions,
+        rewards, and governance mechanisms.
+      </p>
+
+      <div class="highlight">
+        <strong>📊 Token Supply & Distribution:</strong>
+      </div>
+      <ul>
+        <li><strong>Total Supply:</strong> 1,000,000,000 $TRUMP tokens</li>
+        <li><strong>Circulating Supply at Launch:</strong> 200,000,000 $TRUMP tokens (20%)</li>
+        <li><strong>Token Allocation:</strong></li>
+        <ul>
+          <li>Game Rewards Pool: 40% (400,000,000 tokens) - Distributed gradually to players</li>
+          <li>Liquidity & Treasury: 25% (250,000,000 tokens) - For market stability and ecosystem growth</li>
+          <li>Team & Advisors: 15% (150,000,000 tokens) - Vested over 4 years with 1-year cliff</li>
+          <li>Community & Marketing: 10% (100,000,000 tokens) - Airdrops, partnerships, and promotions</li>
+          <li>Public Sale: 10% (100,000,000 tokens) - Initial token distribution</li>
+        </ul>
+      </ul>
+
+      <div class="highlight">
+        <strong>🔄 Token Utility:</strong>
+      </div>
+      <ul>
+        <li><strong>In-Game Purchases:</strong> Buy farm plots, seeds, equipment, and upgrades</li>
+        <li><strong>Staking Rewards:</strong> Stake $TRUMP to earn boosted farming yields</li>
+        <li><strong>Governance:</strong> Vote on game updates, new features, and treasury allocation</li>
+        <li><strong>NFT Integration:</strong> Required for premium farm ownership and special events</li>
+        <li><strong>Referral Bonuses:</strong> Earn additional rewards for bringing new players</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>💰 Economic Mechanisms:</strong>
+      </div>
+      <ul>
+        <li><strong>Deflationary Pressure:</strong> 2% burn on all in-game transactions</li>
+        <li><strong>Treasury Buybacks:</strong> Monthly repurchase of tokens using 20% of revenue</li>
+        <li><strong>Staking Incentives:</strong> 5-15% APY based on lock duration</li>
+        <li><strong>Reward Distribution:</strong> Daily farming rewards from the reward pool</li>
+      </ul>
+
+      <div class="token-price-note">
+        <strong>⚠️ Important Notice:</strong> All returns and rewards in National Agriculture Farm are directly
+        dependent on the market price of the $TRUMP token. Token value fluctuations will impact earning potential,
+        NFT values, and overall game economics. Players should understand that cryptocurrency investments carry
+        inherent risks and should only invest what they can afford to lose.
+      </div>
+
+      <p>
+        The token's value is determined by market forces, community adoption, and the success of our ecosystem
+        development. As the game grows and more players join, demand for $TRUMP tokens naturally increases,
+        potentially driving value appreciation.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Referral System</h2>
+    <div class="section-content">
+      <p>
+        Our referral program is designed to reward community growth and incentivize players to bring new farmers
+        into the ecosystem. The system operates transparently on-chain and provides sustainable income streams
+        for active community members.
+      </p>
+
+      <div class="referral-system">
+        <strong>💰 Referral Rewards:</strong> Earn 10% in USDC on every shop resource purchase made by your
+        referred players. This includes all farm expansions, crop purchases, and equipment upgrades purchased
+        through the in-game shop.
+      </p>
+
+      <p>
+        The referral system is built on trust and transparency:
+      </p>
+      <ul>
+        <li>All referral payments are made in stable USDC currency</li>
+        <li>Rewards are automatically distributed when referred players make purchases</li>
+        <li>No minimum thresholds or complicated claiming processes</li>
+        <li>Referral links are permanent and track all future purchases</li>
+      </ul>
+
+      <p>
+        This system creates a virtuous cycle where experienced players benefit from bringing new participants
+        into the ecosystem, while new players receive guidance and support from their referrers.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Treasury & Reward Pool</h2>
+    <div class="section-content">
+      <p>
+        The project treasury serves as the foundation of our reward ecosystem, ensuring long-term sustainability
+        and value creation for token holders.
+      </p>
+
+      <div class="highlight">
+        <strong>🏦 Treasury Function:</strong> The treasury acts as a reward pool that gradually repurchases
+        $TRUMP tokens from the market. These repurchased tokens are then redistributed to players through
+        various reward mechanisms, creating a deflationary effect and increasing token scarcity over time.
+      </div>
+
+      <p>
+        Treasury funds are sourced from:
+      </p>
+      <ul>
+        <li>Initial token sale proceeds</li>
+        <li>Platform fees from in-game transactions</li>
+        <li>Advertising revenue from partner placements</li>
+        <li>Strategic partnerships and sponsorships</li>
+        <li><strong>Plot and resource sales</strong> - Revenue from sales of farm plots and in-game resources according to the project tokenomics, without implying direct $TRUMP purchases.</li>
+      </ul>
+
+      <p>
+        The gradual repurchase mechanism ensures:
+      </p>
+      <ul>
+        <li>Controlled token supply reduction</li>
+        <li>Stable reward distribution to active players</li>
+        <li>Long-term value appreciation for token holders</li>
+        <li>Sustainable ecosystem growth</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Advertising System</h2>
+    <div class="section-content">
+      <p>
+        Our innovative advertising system creates a win-win situation for brands, players, and the ecosystem.
+        Partner companies can purchase advertising space within the game environment, gaining visibility to
+        our engaged player base while directly contributing to the reward pool.
+      </p>
+
+      <div class="ad-system">
+        <strong>📢 Outdoor Advertising:</strong> Partners can purchase spots on virtual billboards and outdoor
+        signage throughout the farm environment. Their brands will be prominently displayed and integrated
+        into the game world, creating authentic brand experiences for players.
+      </div>
+
+      <p>
+        Benefits for advertising partners:
+      </p>
+      <ul>
+        <li>Direct exposure to engaged Web3 gaming audience</li>
+        <li>Integration into immersive game environment</li>
+        <li>Positive brand association with farming and agriculture themes</li>
+        <li>Contribution to ecosystem sustainability</li>
+        <li>Measurable impact through player engagement metrics</li>
+      </ul>
+
+      <p>
+        For players, this system provides:
+      </p>
+      <ul>
+        <li>Enhanced game atmosphere with real-world brand integration</li>
+        <li>Additional rewards funded by advertising revenue</li>
+        <li>Support for continued game development and features</li>
+        <li>Positive perception of participating brands within the community</li>
+      </ul>
+
+      <p>
+        Brands that participate in our advertising program are viewed favorably by the farming community,
+        creating authentic partnerships that benefit all stakeholders.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">Roadmap & Future Development</h2>
+    <div class="section-content">
+      <p>
+        National Agriculture Farm is committed to continuous improvement and expansion. Our development roadmap
+        includes advanced farming mechanics, cross-game integrations, and enhanced economic features.
+      </p>
+
+      <p>
+        Key upcoming features:
+      </p>
+      <ul>
+        <li>Advanced crop breeding and genetic modification systems</li>
+        <li>Multiplayer farming cooperatives and trading</li>
+        <li>Seasonal events and limited-time challenges</li>
+        <li>Mobile application for on-the-go farming</li>
+        <li>Integration with DeFi protocols for advanced yield farming</li>
+        <li>DAO governance for community-driven development</li>
+      </ul>
+
+      <div class="highlight">
+        <strong>🎉 Mainnet Events & Seasons:</strong> Upon mainnet launch, we'll introduce dynamic seasonal events
+        and limited-time challenges that make gameplay more engaging, profitable, and current. These events will
+        include special farming competitions, rare crop drops, and exclusive rewards that keep the farming
+        experience fresh and exciting for all players.
+      </div>
+
+      <p>
+        Our advertising system and treasury mechanisms will continue to evolve, providing increasing value
+        to both players and partners as the ecosystem grows.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">🏆 Leaderboard & Competitive Farming</h2>
+    <div class="section-content">
+      <p>
+        National Agriculture Farm features a comprehensive leaderboard system that recognizes and rewards
+        the most successful farmers in our community. This competitive element adds excitement and
+        motivation to the farming experience.
+      </p>
+
+      <div class="highlight">
+        <strong>🥇 Top Farmer Benefits:</strong> The highest-ranked farmers receive exclusive rewards including
+        bonus $TRUMP token allocations, rare NFT drops, and special in-game perks. These rewards are funded
+        directly from the treasury, creating a merit-based system that benefits the most dedicated players.
+      </div>
+
+      <p>
+        The leaderboard system encourages healthy competition while rewarding players who demonstrate
+        skill, dedication, and strategic thinking in their farming operations. Top-ranked farmers become
+        community leaders and ambassadors for the National Agriculture Farm ecosystem.
+      </p>
+    </div>
+  </section>
+
+  <section class="section">    <h2 class="section-title">Risks & Considerations</h2>
+    <div class="section-content">
+      <p>
+        While National Agriculture Farm offers exciting opportunities, participants should be aware of the
+        inherent risks involved in Web3 gaming and cryptocurrency investments.
+      </p>
+
+      <div class="token-price-note">
+        <strong>⚠️ Market Risk:</strong> The value of $TRUMP tokens and all associated rewards can fluctuate
+        significantly based on market conditions. Past performance does not guarantee future results.
+      </div>
+
+      <p>
+        We recommend thorough research and only investing what you can afford to lose. The team is committed
+        to transparency and will provide regular updates on development progress and ecosystem health.
+      </p>
+    </div>
+  </section>
+
+  <div class="back-to-home">
+    <a href="index.html" class="back-link">
+      ← Back to Home
+    </a>
+  </div>
+</main>
+
+<script>
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.navbar');
+  if (window.scrollY > 50) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+</script>
+
+</body>
+</html>
