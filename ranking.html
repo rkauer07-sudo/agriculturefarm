@@ -437,7 +437,7 @@ footer {
     <li><a href="index.html#tokenomics">Tokenomics</a></li>
     <li><a href="index.html#features">Features</a></li>
     <li><a href="index.html#faq">FAQ</a></li>
-    <li><a href="whitepaper.html" style="color:var(--gold)">📄 Whitepaper</a></li>
+    <li><a href="whitepaper.html" style="color:#ffffff">📄 Whitepaper</a></li>
     <li><a href="ranking.html" style="color:var(--gold)">Ranking</a></li>
   </ul>
   <a href="https://play.agriculturefarm.xyz" class="nav-cta">
@@ -451,7 +451,7 @@ footer {
   <div class="eyebrow">Agriculture Farm</div>
   <div class="glow-line" style="margin:8px auto 18px"></div>
   <h1 class="hero-title">🏆 LEADERBOARD</h1>
-  <p class="hero-sub">Top farmers ranked by total $TRUMP produced on the Solana testnet.</p>
+  <p class="hero-sub">Top farmers ranked by total $AFARM produced on the Solana testnet.</p>
 </section>
 
 <!-- MAIN -->
@@ -465,7 +465,7 @@ footer {
     </div>
     <div class="stat-card">
       <div class="stat-val" id="statTotal">—</div>
-      <div class="stat-lbl">$TRUMP Produced</div>
+      <div class="stat-lbl">$AFARM Produced</div>
     </div>
     <div class="stat-card">
       <div class="stat-val" id="statTop">—</div>
@@ -494,7 +494,7 @@ footer {
         <div class="lb-header">
           <span style="text-align:center">#</span>
           <span>Player</span>
-          <span style="text-align:right">$TRUMP Earned</span>
+          <span style="text-align:right">$AFARM Earned</span>
         </div>
         <div id="lbRows">
           <div class="lb-loading">
@@ -636,7 +636,7 @@ async function loadRanking() {
           <div class="podium-rank">#${rank} Farmer</div>
           <div class="podium-wallet" title="${r.wallet}">${r.name || shortAddr(r.wallet)}</div>
           <div class="podium-score">${fmtScore(r.earned)}</div>
-          <div class="podium-label">$TRUMP EARNED</div>
+          <div class="podium-label">$AFARM EARNED</div>
         </div>`;
     }).join('');
     podiumEl.style.display = 'flex';
@@ -652,7 +652,7 @@ async function loadRanking() {
           <div class="lb-wallet">
             <span class="lb-wallet-full" title="${r.wallet}">${r.name ? `<strong style="color:var(--text)">${r.name}</strong> <span style="color:var(--muted);font-size:0.7rem">${shortAddr(r.wallet)}</span>` : shortAddr(r.wallet)}</span>
           </div>
-          <div class="lb-score">${fmtScore(r.earned)} <span style="font-size:0.65rem;color:var(--muted);font-family:'Exo 2',sans-serif">$TRUMP</span></div>
+          <div class="lb-score">${fmtScore(r.earned)} <span style="font-size:0.65rem;color:var(--muted);font-family:'Exo 2',sans-serif">$AFARM</span></div>
         </div>`;
     }).join('');
 
@@ -758,3 +758,7 @@ loadRanking();
 </script>
 </body>
 </html>
+
+
+
+
